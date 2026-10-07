@@ -68,7 +68,7 @@ export class ListagemPokemon {
         })),
       ),
     ),
-    { initialValue: null },
+    { initialValue: [] },
   );
 
   protected paraTitleCase(texto: string): string {
