@@ -28,11 +28,20 @@ export function paraTitleCase(texto: string): string {
   return texto.toLowerCase().replace(/\b\w/g, (l) => l.toUpperCase());
 }
 
+export function paraTiposViewModel(types: readonly string[]): readonly PokemonTypeViewModel[] {
+  return types.map((type) => ({
+    name: type,
+    displayName: paraTitleCase(type),
+    color: obterCorDoTipo(type.toLowerCase()),
+  }));
+}
+
+
 export function obterCorDoTipo(tipo: string): string {
   return TYPE_COLORS[tipo] ?? DEFAULT_TYPE_COLOR;
 }
 
-export function obterCorDeBackgroundDosTipos(tipo: PokemonTypeViewModel[]): string {
+export function obterCorDeBackgroundDosTipos(tipo: readonly PokemonTypeViewModel[]): string {
   const primeiraCor = tipo[0]?.color ?? DEFAULT_TYPE_COLOR;
   const segundaCor = tipo[1]?.color ?? primeiraCor;
 
