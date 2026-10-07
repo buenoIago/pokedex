@@ -1,9 +1,9 @@
 <div class="container py-5">
   <div class="row g-3">
     @for (pkmn of pokemon(); track pkmn.id) {
-      <div class="col-md-6 col-lg-2">
+      <div class="col-6 col-md-4 col-xl-2">
         <div
-          class="card p-3 text-center"
+          class="pokemon-card card p-3 text-center"
           [style.border]="'2px solid transparent'"
           [style.background]="pkmn.background"
         >

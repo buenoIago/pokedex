@@ -48,8 +48,15 @@ export function paraTitleCase(texto: string): string {
   return texto.toLowerCase().replace(/\b\w/g, (l) => l.toUpperCase());
 }
 
-function obterCorDoTipo(type: string): string {
-  return TYPE_COLORS[type] ?? DEFAULT_TYPE_COLOR;
+function obterCorDoTipo(tipo: string): string {
+  return TYPE_COLORS[tipo] ?? DEFAULT_TYPE_COLOR;
+}
+
+function obterCorDeBackgroundDosTipos(tipo: PokemonTypeViewModel[]): string {
+  const primeiraCor = tipo[0]?.color ?? DEFAULT_TYPE_COLOR;
+  const segundaCor = tipo[1]?.color ?? primeiraCor;
+
+  return `linear-gradient(var(--bs-card-bg), var(--bs-card-bg)) padding-box, linear-gradient(135deg, ${primeiraCor} 0 50%, ${segundaCor} 50% 100%) border-box`;
 }
 
 function paraCardViewModel(dto: Pokemon): PokemonCardViewModel {
@@ -60,8 +67,8 @@ function paraCardViewModel(dto: Pokemon): PokemonCardViewModel {
     color: obterCorDoTipo(type.toLowerCase()),
   }));
 
-  const primeiraCor = types[0]?.color ?? DEFAULT_TYPE_COLOR;
-  const segundaCor = types[1]?.color ?? primeiraCor;
+
+
 
   return {
     id: dto.id,
@@ -69,17 +76,12 @@ function paraCardViewModel(dto: Pokemon): PokemonCardViewModel {
     imageUrl: dto.sprite,
     imageAlt: `Imagem de ${displayName}`,
     types: types,
-    background: `
-    linear-gradient(var(--bs-card-bg), 
-    var(--bs-card-bg) padding-box, 
-    linear-gradient(135deg, 
-    ${primeiraCor} 0 50%, 
-    ${segundaCor} 50% 100%) border-box`,
+    background: obterCorDeBackgroundDosTipos(types),
   };
 }
 
 @Component({
-  imports: [],
+
   selector: 'app-listagem-pokemon',
   templateUrl: './listagem-pokemon.html',
 })
