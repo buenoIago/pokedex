@@ -1,21 +1,29 @@
 <div class="container my-3">
   <div class="row g-3">
-    @for (pokm of pokemon(); track pokm.id) {
+    @for (pkmn of pokemon(); track pkmn.id) {
       <div class="col-md-6 col-lg-2">
-        <div class="card p-3 text-center">
-          <span class="fs-6 fw-medium card-title">{{ paraTitleCase(pokm.name) }}</span>
+        <div
+          class="card p-3 text-center"
+          [style.border]="'2px solid transparent'"
+          [style.background]="pkmn.background"
+        >
+          <span class="fs-6 fw-medium card-title">{{ pkmn.displayName }}</span>
 
           <div class="d-flex justify-content-center gap-2">
-            @for (tipo of pokm.types; track tipo) {
-              <span class="badge rounded-pill text-light">{{ paraTitleCase(tipo) }}</span>
+            @for (type of pkmn.types; track type.name) {
+              <span class="badge rounded-pill text-light" [style.background-color]="type.color">{{
+                type.displayName
+              }}</span>
             }
           </div>
 
-          @if (pokm.sprite) {
-            <img [src]="pokm.sprite" [alt]="pokm.name" />
+          @if (pkmn.imageUrl) {
+            <img [src]="pkmn.imageUrl" [alt]="pkmn.imageAlt" />
           } @else {
             <p>Imagem não disponível</p>
           }
         </div>
       </div>
     }
+  </div>
+</div>
