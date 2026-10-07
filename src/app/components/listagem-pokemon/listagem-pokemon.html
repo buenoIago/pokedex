@@ -1,11 +1,21 @@
 <div class="container my-3">
-  <div class="row">
-    @for (obj of objetoResposta()?.results; track obj.name) {
+  <div class="row g-3">
+    @for (pokm of pokemon(); track pokm.id) {
       <div class="col-md-6 col-lg-2">
-        <div class="card">
-          <span class="card-title"> {{ obj.name }} </span>
+        <div class="card p-3 text-center">
+          <span class="fs-6 fw-medium card-title">{{ paraTitleCase(pokm.name) }}</span>
+
+          <div class="d-flex justify-content-center gap-2">
+            @for (tipo of pokm.types; track tipo) {
+              <span class="badge rounded-pill text-light">{{ paraTitleCase(tipo) }}</span>
+            }
+          </div>
+
+          @if (pokm.sprite) {
+            <img [src]="pokm.sprite" [alt]="pokm.name" />
+          } @else {
+            <p>Imagem não disponível</p>
+          }
         </div>
       </div>
     }
-  </div>
-</div>
