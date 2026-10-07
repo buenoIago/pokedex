@@ -1,0 +1,11 @@
+<div class="container my-3">
+  <div class="row">
+    @for (obj of objetoResposta()?.results; track obj.name) {
+      <div class="col-md-6 col-lg-2">
+        <div class="card">
+          <span class="card-title"> {{ obj.name }} </span>
+        </div>
+      </div>
+    }
+  </div>
+</div>
