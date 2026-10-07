@@ -69,7 +69,12 @@ function paraCardViewModel(dto: Pokemon): PokemonCardViewModel {
     imageUrl: dto.sprite,
     imageAlt: `Imagem de ${displayName}`,
     types: types,
-    background: `linear-gradient(#182033, #182033) padding-box, linear-gradient(135deg, ${primeiraCor} 0 50%, ${segundaCor} 50% 100%) border-box`,
+    background: `
+    linear-gradient(var(--bs-card-bg), 
+    var(--bs-card-bg) padding-box, 
+    linear-gradient(135deg, 
+    ${primeiraCor} 0 50%, 
+    ${segundaCor} 50% 100%) border-box`,
   };
 }
 
