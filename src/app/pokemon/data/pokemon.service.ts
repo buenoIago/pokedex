@@ -33,20 +33,25 @@ export class PokemonService {
   private readonly http = inject(HttpClient);
   private readonly apiUrl = inject(POKE_API_URL);
 
-  listar(): Observable<Pokemon[]> {
-    // O primeiro GET traz apenas os nomes e as URLs dos Pokémons.
-    return this.http.get<ObjetoRespostaHttp>(this.apiUrl).pipe(
-      switchMap((obj) => {
-        // Criamos uma requisicão de detalhe para cada Pokémon da listagem.
-        const requisicoes = obj.results.map((r) => this.http.get<PokemonRespostaHttp>(r.url));
+  listar(pagina: number = 1, limite: number = 24): Observable<Pokemon[]> {
+    const offset = (pagina - 1) * limite;
+    const url = `${this.apiUrl}?limit=${limite}&offset=${offset}`;
 
-        // forkJoin espera todas as requisicões terminarem e emite um array
-        // com as respostas na mesma ordem das requisicoes.
+    // O primeiro GET traz apenas os nomes e as URLs dos Pokémons da página solicitada.
+    return this.http.get<ObjetoRespostaHttp>(url).pipe(
+      switchMap((obj) => {
+        // Criamos uma requisição de detalhe para cada Pokémon da listagem.
+        const requisicoes = obj.results.map((r) =>
+          this.http.get<PokemonRespostaHttp>(r.url),
+        );
+
+        // forkJoin espera todas as requisições terminarem e emite um array
+        // com as respostas na mesma ordem das requisições.
         return forkJoin(requisicoes);
       }),
-      // Este map é do RxJS: transforma a emissão do Observable.
+      // Este map do RxJS transforma a emissão do Observable.
       map((detalhes: PokemonRespostaHttp[]): Pokemon[] =>
-        // Este map é do array: transforma cada resposta bruta em Pokémon.
+        // Este map do array transforma cada resposta bruta em Pokémon.
         detalhes.map(mapearRespostaPokemon),
       ),
     );
