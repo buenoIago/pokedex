@@ -30,7 +30,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(),
     {
       provide: POKE_API_URL,
-      useValue: 'https://pokeapi.co/api/v2/pokemon/',
+      useValue: 'https://pokeapi.co/api/v2/pokemon/?limit=151',
     },
   ],
 };
