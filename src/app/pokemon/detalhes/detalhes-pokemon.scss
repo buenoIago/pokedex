@@ -85,3 +85,50 @@
 .pokemon-stat .progress-bar {
   background: linear-gradient(90deg, var(--pokedex-blue), var(--pokedex-yellow));
 }
+
+.pokemon-pagination__link {
+  min-height: 5rem;
+  padding-inline: 1.25rem;
+  border: 1px solid rgba(61, 126, 255, 0.35);
+  border-radius: 0.75rem;
+  color: var(--pokedex-text);
+  background: rgba(61, 126, 255, 0.1);
+}
+
+.pokemon-pagination__content {
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.pokemon-pagination__sprite {
+  width: 4rem;
+  height: 4rem;
+  flex: 0 0 4rem;
+  object-fit: contain;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 0.35rem 0.35rem rgba(0, 0, 0, 0.25));
+}
+
+.pokemon-pagination__copy {
+  min-width: 0;
+}
+
+.pokemon-pagination__link:hover {
+  border-color: var(--pokedex-yellow);
+  background: rgba(246, 201, 69, 0.1);
+}
+
+.pokemon-pagination__direction {
+  color: var(--pokedex-text-muted);
+  font-family: var(--pokedex-font-display);
+}
+
+@media (max-width: 991.98px) {
+  .pokemon-details__visual {
+    min-height: 18rem;
+  }
+
+  .pokemon-details__image {
+    max-height: 18rem;
+  }
+}

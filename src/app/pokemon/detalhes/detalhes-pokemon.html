@@ -93,5 +93,63 @@
         </div>
       </div>
     </article>
+
+    @if (pokemon.previous || pokemon.next) {
+      <nav class="row g-3 mt-4" aria-label="Navegação entre Pokémon">
+        @if (pokemon.previous; as previous) {
+          <div class="col-12 col-sm-6">
+            <a
+              class="pokemon-pagination__link d-flex flex-column justify-content-center gap-1 py-3 text-decoration-none"
+              [routerLink]="['/pokemon', previous.name]"
+            >
+              <div class="pokemon-pagination__content d-flex align-items-center">
+                @if (previous.spriteUrl; as spriteUrl) {
+                  <img
+                    class="pokemon-pagination__sprite"
+                    [src]="spriteUrl"
+                    [alt]="previous.spriteAlt"
+                  />
+                }
+                <span class="pokemon-pagination__copy d-flex flex-column gap-1">
+                  <span class="pokemon-pagination__direction small">
+                    <i class="bi bi-arrow-left"></i>
+                    Anterior
+                  </span>
+                  <strong class="text-truncate"
+                    >{{ previous.number }} {{ previous.displayName }}</strong
+                  >
+                </span>
+              </div></a
+            >
+          </div>
+        }
+
+        @if (pokemon.next; as next) {
+          <div class="col-12 col-sm-6">
+            <a
+              class="pokemon-pagination__link d-flex flex-column justify-content-center gap-1 py-3 align-items-end text-start text-decoration-none"
+              [routerLink]="['/pokemon', next.name]"
+            >
+              <div class="pokemon-pagination__content d-flex flex-row-reverse align-items-center">
+                @if (next.spriteUrl; as spriteUrl) {
+                  <img
+                    class="pokemon-pagination__sprite"
+                    [src]="spriteUrl"
+                    [alt]="next.spriteAlt"
+                  />
+                }
+                <span class="pokemon-pagination__copy d-flex flex-column gap-1">
+                  <span class="pokemon-pagination__direction small">
+                    <i class="bi bi-arrow-right"></i>
+                    Anterior
+                  </span>
+                  <strong class="text-truncate">{{ next.number }} {{ next.displayName }}</strong>
+                </span>
+              </div></a
+            >
+          </div>
+        }
+      </nav>
+    }
   }
 </div>

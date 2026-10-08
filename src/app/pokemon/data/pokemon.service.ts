@@ -58,7 +58,13 @@ export class PokemonService {
     const urlCompleto = `${this.apiUrl}${nomeNormalizado}`;
 
     return this.http
-      .get<PokemonRespostaHttp>(`${this.apiUrl}${nomeNormalizado}`)
+      .get<PokemonRespostaHttp>(`${this.apiUrl}${encodeURIComponent(nomeNormalizado)}`)
+      .pipe(map(mapearRespostaDetalhesPokemon));
+  }
+
+  buscarPorId(id: number): Observable<PokemonDetails> {
+    return this.http
+      .get<PokemonRespostaHttp>(`${this.apiUrl}${id}`)
       .pipe(map(mapearRespostaDetalhesPokemon));
   }
 }
