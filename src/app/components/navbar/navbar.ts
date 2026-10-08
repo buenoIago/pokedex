@@ -16,7 +16,7 @@ interface ItemNavbar {
 export class Navbar {
   private readonly router = inject(Router);
 
-  protected readonly itensNavbar: ItemNavbar[] = [{ titulo: 'Início', url: '#' }];
+  protected readonly itensNavbar: ItemNavbar[] = [{ titulo: '', url: '' }];
   protected readonly menuAberto = signal(false);
   protected readonly nomeBusca = signal('');
 
