@@ -11,7 +11,7 @@ function mapearRespostaPokemon(dto: PokemonRespostaHttp): Pokemon {
     id: dto.id,
     name: dto.name,
     types: dto.types.map((item) => item.type.name),
-    sprite: dto.sprites.front_default,
+    spriteUrl: dto.sprites.front_default,
   };
 }
 
@@ -52,11 +52,13 @@ export class PokemonService {
     );
   }
 
-  buscarPorNome(name: string): Observable<PokemonDetails> {
-    const nomeNormalizado = name.trim().toLowerCase();
+  buscarPorNome(nome: string): Observable<PokemonDetails> {
+    const nomeNormalizado = nome.trim().toLowerCase();
 
     const urlCompleto = `${this.apiUrl}${nomeNormalizado}`;
 
-    return this.http.get<PokemonRespostaHttp>(urlCompleto).pipe(map(mapearRespostaDetalhesPokemon));
+    return this.http
+      .get<PokemonRespostaHttp>(`${this.apiUrl}${nomeNormalizado}`)
+      .pipe(map(mapearRespostaDetalhesPokemon));
   }
 }

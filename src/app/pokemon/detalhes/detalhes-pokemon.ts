@@ -1,11 +1,10 @@
+import { map, switchMap } from 'rxjs';
 import { Component, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { ActivatedRoute } from '@angular/router';
-import { map, switchMap } from 'rxjs';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { PokemonService } from '../data/pokemon.service';
 import { PokemonDetails, PokemonTypeViewModel } from '../pokemon.model';
-import { paraTiposViewModel, paraTitleCase } from '../pokemon.util';
-
+import { obterCorDeBackgroundDosTipos, paraTiposViewModel, paraTitleCase } from '../pokemon.util';
 
 interface PokemonAbilityViewModel {
   readonly name: string;
@@ -24,6 +23,8 @@ interface PokemonDetailsViewModel {
   readonly number: string;
   readonly name: string;
   readonly displayName: string;
+  readonly background: string;
+  readonly spriteUrl: string | null;
   readonly imageUrl: string | null;
   readonly imageAlt: string;
   readonly audioUrl: string | null;
@@ -65,22 +66,25 @@ function obterPercentualEstatistica(value: number): number {
 
 function paraDetalhesViewModel(dto: PokemonDetails): PokemonDetailsViewModel {
   const displayName = paraTitleCase(dto.name);
+  const types = paraTiposViewModel(dto.types);
 
   return {
     id: dto.id,
     number: paraNumeroPokemon(dto.id),
     name: dto.name,
     displayName: displayName,
+    background: obterCorDeBackgroundDosTipos(types),
+    spriteUrl: dto.spriteUrl,
     imageUrl: dto.imageUrl,
     imageAlt: `Imagem de ${displayName}`,
     audioUrl: dto.audioUrl,
     height: paraAlturaPokemon(dto.height),
     weight: paraPesoPokemon(dto.weight),
-    types: paraTiposViewModel(dto.types),
+    types: types,
     abilities: dto.abilities.map((name) => ({ name: name, displayName: paraTitleCase(name) })),
     stats: dto.stats.map(({ name, baseValue }) => ({
       name: name,
-      displayName: paraTitleCase(name),
+      displayName: paraNomeEstatistica(name),
       value: baseValue,
       percentage: obterPercentualEstatistica(baseValue),
     })),
@@ -88,20 +92,20 @@ function paraDetalhesViewModel(dto: PokemonDetails): PokemonDetailsViewModel {
 }
 
 @Component({
-  imports: [],
-  selector: 'app-detalhes',
+  imports: [RouterLink],
+  selector: 'app-detalhes-pokemon',
+  styleUrl: './detalhes-pokemon.scss',
   templateUrl: './detalhes-pokemon.html',
 })
 
 export class DetalhesPokemon {
-  // Permite acesso à dados da rota atual
-  private readonly route = inject(ActivatedRoute);
+  private readonly route = inject(ActivatedRoute); // Permite acesso à dados da rota atual
   private readonly pokemonService = inject(PokemonService);
 
   protected readonly pokemon = toSignal(
     this.route.paramMap.pipe(
       map((params) => params.get('name') ?? ''),
-      switchMap((name) => this.pokemonService.buscarPorNome(name)),
+      switchMap((nome) => this.pokemonService.buscarPorNome(nome)),
       map(paraDetalhesViewModel),
     ),
   );

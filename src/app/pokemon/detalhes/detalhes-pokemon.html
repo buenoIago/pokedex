@@ -1,1 +1,97 @@
-<p>{{ pokemon()?.name }}</p>
+<div class="pokemon-details-page container py-4 py-lg-5">
+  <a class="pokemon-back-link d-inline-flex align-items-center gap-2 mb-4" routerLink="/">
+    <i class="bi bi-arrow-left"></i>
+    Voltar para Pokédex
+  </a>
+
+  @if (pokemon(); as pokemon) {
+    <article
+      class="pokemon-details card overflow-hidden"
+      [style.border]="'2px solid transparent'"
+      [style.background]="pokemon.background"
+      style="min-height: 500px"
+    >
+      <div class="row g-0">
+        <div
+          class="pokemon-details__visual col-lg-5 d-flex flex-column align-items-center justify-content-center p-4 p-md-5"
+        >
+          @if (pokemon.imageUrl; as imageUrl) {
+            <img
+              class="pokemon-details__image object-fit-contain"
+              [src]="imageUrl"
+              [alt]="pokemon.imageAlt"
+            />
+          } @else {
+            <p class="text-body-secondary">Imagem indisponível</p>
+          }
+
+          @if (pokemon.audioUrl; as audioUrl) {
+            <div
+              class="pokemon-details__audio d-flex flex-column align-items-center gap-2 mt-4 w-100"
+            >
+              <span class="pokemon-details__audio-label small">Som do Pokémon</span>
+
+              <audio controls preload="metadata" [src]="audioUrl">
+                Seu navegador não suporta áudio.
+              </audio>
+            </div>
+          }
+        </div>
+
+        <div class="col-lg-7 p-4 p-md-5">
+          <p class="pokemon-details__number mb-2">{{ pokemon.number }}</p>
+
+          <div class="d-flex align-items-start justify-content-between gap-3 mb-3">
+            <h1 class="display-4 mb-0">{{ pokemon.displayName }}</h1>
+          </div>
+
+          <div class="row g-3 mb-4">
+            <div class="col-sm-6">
+              <div class="pokemon-measurement d-flex flex-column gap-1 p-3">
+                <span class="pokemon-measurement__label small">Altura</span>
+                <strong>{{ pokemon.height }}</strong>
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <div class="pokemon-measurement d-flex flex-column gap-1 p-3">
+                <span class="pokemon-measurement__label small">Peso</span>
+                <strong>{{ pokemon.weight }}</strong>
+              </div>
+            </div>
+          </div>
+
+          <h2 class="h4 mb-3">Habilidades</h2>
+          <div class="d-flex flex-wrap gap-2 mb-4">
+            @for (ability of pokemon.abilities; track ability.name) {
+              <span class="pokemon-ability">{{ ability.displayName }}</span>
+            }
+          </div>
+
+          <h2 class="h4 mb-3">Estatísticas base</h2>
+          <div class="pokemon-stats">
+            @for (stat of pokemon.stats; track stat.name) {
+              <div class="pokemon-stat">
+                <div class="d-flex justify-content-between gap-3 mb-1">
+                  <span>{{ stat.displayName }}</span>
+                  <strong class="text-body">{{ stat.value }}</strong>
+                </div>
+
+                <div
+                  class="progress"
+                  role="progressbar"
+                  [attr.aria-label]="stat.displayName"
+                  [attr.aria-valuenow]="stat.value"
+                  aria-valuemin="0"
+                  aria-valuemax="255"
+                >
+                  <div class="progress-bar" [style.width.%]="stat.percentage"></div>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </article>
+  }
+</div>

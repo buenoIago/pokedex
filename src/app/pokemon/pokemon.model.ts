@@ -2,7 +2,7 @@ export interface Pokemon {
   id: number;
   name: string;
   types: string[];
-  sprite: string | null;
+  spriteUrl: string | null;
 }
 
 export interface PokemonStat {
@@ -11,6 +11,7 @@ export interface PokemonStat {
 }
 
 export interface PokemonDetails extends Pokemon {
+  readonly spriteUrl: string | null;
   readonly imageUrl: string | null;
   readonly audioUrl: string | null;
   readonly height: number;
