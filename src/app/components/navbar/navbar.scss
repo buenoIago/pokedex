@@ -25,3 +25,31 @@
 .navbar-toggler {
   border-color: rgba(245, 247, 251, 0.35);
 }
+
+//busca por nome de pokeomn
+
+.navbar-busca {
+  width: 100%;
+  max-width: 320px;
+}
+
+.navbar-busca .form-control {
+  background-color: var(--pokedex-background);
+  border-color: var(--pokedex-border);
+  color: var(--pokedex-text);
+}
+
+.navbar-busca .form-control::placeholder {
+  color: var(--pokedex-text-muted);
+}
+
+.navbar-busca .form-control:focus {
+  border-color: var(--pokedex-primary);
+  box-shadow: 0 0 0 0.2rem rgba(96, 165, 250, 0.2);
+}
+
+@media (max-width: 991.98px) {
+  .navbar-busca {
+    max-width: none;
+  }
+}

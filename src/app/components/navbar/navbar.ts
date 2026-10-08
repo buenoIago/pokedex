@@ -1,4 +1,5 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
+import { Router } from '@angular/router';
 
 interface ItemNavbar {
   titulo: string;
@@ -13,9 +14,11 @@ interface ItemNavbar {
 })
 
 export class Navbar {
-  protected readonly itensNavbar: ItemNavbar[] = [{ titulo: 'Início', url: '#' }];
+  private readonly router = inject(Router);
 
+  protected readonly itensNavbar: ItemNavbar[] = [{ titulo: 'Início', url: '#' }];
   protected readonly menuAberto = signal(false);
+  protected readonly nomeBusca = signal('');
 
   protected alternarMenu(): void {
     this.menuAberto.update((aberto) => !aberto);
@@ -23,5 +26,23 @@ export class Navbar {
 
   protected fecharMenu(): void {
     this.menuAberto.set(false);
+  }
+
+  protected atualizarBusca(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    this.nomeBusca.set(input.value);
+  }
+
+  protected buscarPokemon(event: SubmitEvent): void {
+    event.preventDefault();
+
+    const nome = this.nomeBusca().trim().toLowerCase();
+
+    if (!nome) {
+      return;
+    }
+
+    this.fecharMenu();
+    this.router.navigate(['/pokemon', nome]);
   }
 }
