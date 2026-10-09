@@ -46,6 +46,8 @@
 
             <button
               type="button"
+              class="favorite-button"
+              [class.favorite-button--active]="estaFavoritado()"
               [attr.aria-pressed]="estaFavoritado()"
               [attr.aria-label]="
                 estaFavoritado()

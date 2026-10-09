@@ -6,6 +6,7 @@ import { paraTitleCase } from '../pokemon.util';
 @Component({
   imports: [RouterLink],
   selector: 'app-listagem-favoritos',
+  styleUrl: './listagem-favoritos.scss',
   templateUrl: './listagem-favoritos.html',
 })
 
