@@ -73,7 +73,12 @@
           "builder": "@angular/build:unit-test"
         },
         "deploy": {
-          "builder": "angular-cli-ghpages:deploy"
+          "builder": "angular-cli-ghpages:deploy",
+          "options": {
+          "baseHref": "https://buenoIago.github.io/pokedex/",
+          "name": "Iago Pereira",
+          "email": "iagocedup@gmail.com"
+          }
         }
       }
     }
